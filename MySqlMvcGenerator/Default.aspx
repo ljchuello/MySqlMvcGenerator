@@ -56,12 +56,65 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a href="#test1">Principal</a></li>
-                    <li class="tab col s3"><a class="active" href="#test2">File.cs</a></li>
+                    <li class="tab col s3"><a class="active" href="#test1">Principal</a></li>
+                    <li class="tab col s3"><a href="#test2">File.cs</a></li>
                 </ul>
             </div>
-            <div id="test1" class="col s12">Principal</div>
+
+            <div id="test1" class="col s12">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+
+                        <div class="col s6">
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtServidor" runat="server"></asp:TextBox>
+                                <label for="<%=txtServidor.ClientID%>">Servidor</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtUsuario" runat="server"></asp:TextBox>
+                                <label for="<%=txtUsuario.ClientID%>">Usuario</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtContrasenia" runat="server"></asp:TextBox>
+                                <label for="<%=txtContrasenia.ClientID%>">Contrasenia</label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtBaseDatos" runat="server"></asp:TextBox>
+                                <label for="<%=txtBaseDatos.ClientID%>">Base de datos</label>
+                            </div>
+
+                            <div class="col s12">
+                                <button id="btnConectar" runat="server" class="btn blue col s12" onserverclick="btnConectar_OnServerClick">
+                                    Conectar
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <div class="col s6">
+
+                            <div class="input-field col s12">
+                                <asp:DropDownList ID="ddlTabla" runat="server"></asp:DropDownList>
+                                <label for="<%=ddlTabla.ClientID%>">Tabla</label>
+                            </div>
+
+                            <div class="col s12">
+                                <button id="btnGenerar" runat="server" class="btn green col s12" onserverclick="btnGenerar_OnServerClick">
+                                    Generar
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
             <div id="test2" class="col s12">File.cs</div>
+
         </div>
 
     </form>

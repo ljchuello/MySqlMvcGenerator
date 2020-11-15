@@ -220,7 +220,7 @@ namespace MySqlMvcGenerator.Libreria
                 stringBuilder.AppendLine("}");
                 return stringBuilder.ToString();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return string.Empty;
             }
