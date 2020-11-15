@@ -10,11 +10,15 @@ namespace MySqlMvcGenerator.Libreria
     {
         public string Generar(Page page, string tabla, List<Estructura> campos)
         {
+            int iteracion = 0;
             try
             {
                 StringBuilder stringBuilder = new StringBuilder();
-                stringBuilder.AppendLine($"// Mo{tabla}.cs");
+                stringBuilder.AppendLine($"// {tabla}.cs");
                 stringBuilder.AppendLine("using System;");
+                stringBuilder.AppendLine("using System.Text;");
+                stringBuilder.AppendLine("using DataCloud.Libreria;");
+                stringBuilder.AppendLine("using MySql.Data.MySqlClient;");
                 stringBuilder.AppendLine("");
                 stringBuilder.AppendLine("namespace DataCloud");
                 stringBuilder.AppendLine("{");
@@ -29,6 +33,8 @@ namespace MySqlMvcGenerator.Libreria
                 stringBuilder.AppendLine($"    public class {tabla}");
                 stringBuilder.AppendLine("    {");
 
+                stringBuilder.AppendLine($"        private readonly PoolConexion _poolConexion = new PoolConexion();");
+                stringBuilder.AppendLine($"");
                 stringBuilder.AppendLine($"        private const string Select = \"SELECT {string.Join(", ", campos.Select(x => x.Nombre))} FROM {tabla}\";");
                 stringBuilder.AppendLine("");
 
@@ -79,11 +85,161 @@ namespace MySqlMvcGenerator.Libreria
 
                 #endregion
 
-                stringBuilder.AppendLine("        #region Block's");
+                #region Methods
 
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("        #region Methods");
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("");
+                stringBuilder.AppendLine("        #endregion");
 
+                #endregion
+
+                #region Bloque
+
+                if (campos.First().Nombre.ToLower() == "id")
+                {
+                    stringBuilder.AppendLine("");
+                    stringBuilder.AppendLine("        #region Block's");
+
+                    #region Insert Block
+
+                    stringBuilder.AppendLine("");
+                    stringBuilder.AppendLine($"        public string Insert_Block({tabla} {Cadena.PriMin(tabla)})");
+                    stringBuilder.AppendLine($"        {{");
+                    stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
+                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
+                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Insert {tabla}\");");
+                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"INSERT INTO `{tabla}` (\");");
+
+                    // Cabecera
+                    iteracion = 0;
+                    foreach (var row in campos)
+                    {
+                        ++iteracion;
+                        stringBuilder.AppendLine(iteracion != campos.Count
+                            ? $"            stringBuilder.AppendLine(\"`{row.Nombre}`, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                            : $"            stringBuilder.AppendLine(\"`{row.Nombre}` -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                    }
+
+                    // Values
+                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\") VALUES (\");");
+
+                    //Detalles
+                    iteracion = 0;
+                    foreach (var row in campos)
+                    {
+                        ++iteracion;
+                        stringBuilder.AppendLine(iteracion != campos.Count
+                            ? $"            stringBuilder.AppendLine($\"'{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                            : $"            stringBuilder.AppendLine($\"'{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}'); -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                    }
+
+                    stringBuilder.AppendLine($"        return stringBuilder.ToString();");
+                    stringBuilder.AppendLine($"        }}");
+
+                    #endregion
+
+                    #region Update Block
+
+                    if (campos.Count(x => x.Nombre.ToLower() == "id") == 1)
+                    {
+                        stringBuilder.AppendLine("");
+                        stringBuilder.AppendLine($"        public string Update_Block({tabla} {Cadena.PriMin(tabla)})");
+                        stringBuilder.AppendLine($"        {{");
+                        stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Update {tabla}\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"UPDATE `{tabla}` SET\");");
+
+                        // Cabecera
+                        iteracion = 0;
+                        var listUpdate01 = campos.Where(x => x.Nombre.ToLower() != "id").ToList();
+                        foreach (var row in listUpdate01)
+                        {
+                            iteracion = iteracion + 1;
+                            stringBuilder.AppendLine(iteracion != listUpdate01.Count
+                                ? $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                                : $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                        }
+
+                        // Where
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"WHERE\");");
+                        var rowUpdate = campos.FirstOrDefault(x => x.Nombre.ToLower() == "id") ?? new Estructura();
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"`{rowUpdate.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowUpdate.Nombre})}}'; -- {rowUpdate.Nombre} | {rowUpdate.TipoMariaDb} | {rowUpdate.TipoDotNet}\");");
+                        stringBuilder.AppendLine($"        return stringBuilder.ToString();");
+                        stringBuilder.AppendLine($"        }}");
+                    }
+
+                    #endregion
+
+                    #region Delete Block
+
+                    if (campos.Count(x => x.Nombre.ToLower() == "id") == 1)
+                    {
+                        stringBuilder.AppendLine("");
+                        stringBuilder.AppendLine($"        public string Delete_Block({tabla} {Cadena.PriMin(tabla)})");
+                        stringBuilder.AppendLine($"        {{");
+                        stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Delete {tabla}\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"DELETE FROM `{tabla}` WHERE\");");
+                        var rowDelete = campos.FirstOrDefault(x => x.Nombre.ToLower() == "id") ?? new Estructura();
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"`{rowDelete.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowDelete.Nombre})}}'; -- {rowDelete.Nombre} | {rowDelete.TipoMariaDb} | {rowDelete.TipoDotNet}\");");
+                        stringBuilder.AppendLine($"        return stringBuilder.ToString();");
+                        stringBuilder.AppendLine($"        }}");
+                    }
+
+                    #endregion
+
+                    stringBuilder.AppendLine("        #endregion");
+                }
+
+                #endregion
+
+                #region Maker
+
+                stringBuilder.AppendLine("\n        #region Maker");
+
+                stringBuilder.AppendLine($"");
+                stringBuilder.AppendLine($"        private {tabla} Maker(MySqlDataReader dtReader)");
+                stringBuilder.AppendLine($"        {{");
+                stringBuilder.AppendLine($"            " +
+                                         $"{tabla} {Cadena.PriMin(tabla)} = new {tabla}();");
+
+                foreach (var row in campos)
+                {
+                    switch (row.TipoDotNet)
+                    {
+                        case "int":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetInt32(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+
+                        case "decimal":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetDecimal(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+
+                        case "bool":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = !dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) && dtReader.GetBoolean(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+
+                        case "DateTime":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? new DateTime(1900, 01, 01) : dtReader.GetDateTime(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+
+                        default:
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? string.Empty : dtReader.GetString(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+                    }
+                }
+
+                stringBuilder.AppendLine($"            return {Cadena.PriMin(tabla)};");
+                stringBuilder.AppendLine($"        }}");
 
                 stringBuilder.AppendLine("        #endregion");
+
+                #endregion
 
                 stringBuilder.AppendLine("    }");
                 stringBuilder.AppendLine("}");

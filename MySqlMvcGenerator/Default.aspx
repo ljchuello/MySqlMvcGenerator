@@ -56,8 +56,9 @@
         <div class="row">
             <div class="col s12">
                 <ul class="tabs">
-                    <li class="tab col s3"><a class="active" href="#test1">Principal</a></li>
-                    <li class="tab col s3"><a href="#test2">File.cs</a></li>
+                    <li class="tab"><a class="active" href="#test1">Principal</a></li>
+                    <li class="tab"><a href="#test2">File.cs</a></li>
+                    <li class="tab"><a href="/Default.aspx">Reset</a></li>
                 </ul>
             </div>
 
