@@ -113,7 +113,18 @@
                 </asp:UpdatePanel>
             </div>
 
-            <div id="test2" class="col s12">File.cs</div>
+            <div id="test2" class="col s12">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+
+                        <div class="input-field col s12">
+                            <textarea id="txtModelo" runat="server" class="materialize-textarea"></textarea>
+                            <label for="<%=txtModelo.ClientID%>">Modelo</label>
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
 
         </div>
 

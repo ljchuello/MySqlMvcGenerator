@@ -103,6 +103,9 @@ namespace MySqlMvcGenerator
 
                 // Procesamos
                 List<Estructura> lista = _estructura.Devolver(this, dataTable);
+                ModeloV2 modeloV2 = new ModeloV2();
+                txtModelo.InnerText = modeloV2.Generar(this, ddlTabla.SelectedValue, lista);
+                Javascript.ResizeTxt(this, txtModelo.ClientID);
 
                 // Libre de pecados
                 Notificacion.Toas(this, $"Se ha generado la clase de {ddlTabla.SelectedValue}");
