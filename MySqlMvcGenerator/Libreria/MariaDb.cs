@@ -6,7 +6,7 @@ using System.Web.UI;
 using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public class MariaDb
     {

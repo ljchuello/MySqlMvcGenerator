@@ -53,6 +53,17 @@
             };
         </script>
 
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a href="#test1">Principal</a></li>
+                    <li class="tab col s3"><a class="active" href="#test2">File.cs</a></li>
+                </ul>
+            </div>
+            <div id="test1" class="col s12">Principal</div>
+            <div id="test2" class="col s12">File.cs</div>
+        </div>
+
     </form>
 </body>
 </html>

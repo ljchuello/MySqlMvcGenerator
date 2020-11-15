@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web.UI;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public class Notificacion
     {

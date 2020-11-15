@@ -3,7 +3,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public class UControl
     {

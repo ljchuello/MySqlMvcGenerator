@@ -4,7 +4,7 @@ using System.Data;
 using System.Web.UI;
 using Newtonsoft.Json;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public class Estructura
     {

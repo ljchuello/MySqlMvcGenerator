@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Web.UI;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public static class Controlador
     {

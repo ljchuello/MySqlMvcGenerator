@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI.WebControls;
 
-namespace MySqlMvc.Libreria
+namespace MySqlMvcGenerator.Libreria
 {
     public static class Cadena
     {
