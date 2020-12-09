@@ -178,9 +178,28 @@ namespace MySqlMvcGenerator.Libreria
                         foreach (var row in listUpdate01)
                         {
                             iteracion = iteracion + 1;
-                            stringBuilder.AppendLine(iteracion != listUpdate01.Count
-                                ? $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
-                                : $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+
+                            if (!row.Nulo)
+                            {
+                                stringBuilder.AppendLine(iteracion != listUpdate01.Count
+                                    ? $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                                    : $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                            }
+                            else
+                            {
+                                if (iteracion != listUpdate01.Count)
+                                {
+                                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(!_poolConexion.Vacia({Cadena.PriMin(tabla)}.{row.Nombre})");
+                                    stringBuilder.AppendLine($"                ? $\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
+                                    stringBuilder.AppendLine($"                : \"`{row.Nombre}` = NULL, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                                }
+                                else
+                                {
+                                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(!_poolConexion.Vacia({Cadena.PriMin(tabla)}.{row.Nombre})");
+                                    stringBuilder.AppendLine($"                ? $\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
+                                    stringBuilder.AppendLine($"                : \"`{row.Nombre}` = NULL -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                                }
+                            }
                         }
 
                         // Where
