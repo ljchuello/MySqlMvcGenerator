@@ -13,6 +13,7 @@ namespace MySqlMvcGenerator.Libreria
         public string TipoMariaDb { set; get; } = string.Empty;
         public string TipoDotNet { set; get; } = string.Empty;
         public bool Where { set; get; } = false;
+        public bool Nulo { set; get; } = false;
 
         public List<Estructura> Devolver(Page page, DataTable dataTable)
         {
@@ -29,6 +30,11 @@ namespace MySqlMvcGenerator.Libreria
                     if ($"{row["key"]}".Length > 0)
                     {
                         estructura.Where = true;
+                    }
+
+                    if ($"{row["Null"]}" == "YES")
+                    {
+                        estructura.Nulo = true;
                     }
 
                     estructura.TipoMariaDb = $"{row["Type"]}";
