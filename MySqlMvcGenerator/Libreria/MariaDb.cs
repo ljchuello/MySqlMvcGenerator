@@ -84,7 +84,7 @@ namespace MySqlMvcGenerator.Libreria
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
                     mySqlCommand.CommandType = CommandType.Text;
-                    mySqlCommand.CommandText = $"SHOW TABLES FROM {mariaDb.BaseDatos}";
+                    mySqlCommand.CommandText = $"SHOW TABLES";
                     using (MySqlDataReader mySqlDataReader = mySqlCommand.ExecuteReader())
                     {
                         while (mySqlDataReader.Read())
