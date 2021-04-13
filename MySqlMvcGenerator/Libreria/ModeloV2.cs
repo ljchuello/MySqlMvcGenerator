@@ -238,44 +238,44 @@ namespace MySqlMvcGenerator.Libreria
 
                 #region Maker
 
-                //stringBuilder.AppendLine("\n        #region Maker");
+                stringBuilder.AppendLine("\n        #region Maker");
 
-                //stringBuilder.AppendLine($"");
-                //stringBuilder.AppendLine($"        private {tabla} Maker(MySqlDataReader dtReader)");
-                //stringBuilder.AppendLine($"        {{");
-                //stringBuilder.AppendLine($"            " +
-                //                         $"{tabla} {Cadena.PriMin(tabla)} = new {tabla}();");
+                stringBuilder.AppendLine($"");
+                stringBuilder.AppendLine($"        private {tabla} Maker(MySqlDataReader dtReader)");
+                stringBuilder.AppendLine($"        {{");
+                stringBuilder.AppendLine($"            " +
+                                         $"{tabla} {Cadena.PriMin(tabla)} = new {tabla}();");
 
-                //foreach (var row in campos)
-                //{
-                //    switch (row.TipoDotNet)
-                //    {
-                //        case "int":
-                //            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetInt32(dtReader.GetOrdinal(\"{row.Nombre}\"));");
-                //            break;
+                foreach (var row in campos)
+                {
+                    switch (row.TipoDotNet)
+                    {
+                        case "int":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetInt32(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
 
-                //        case "decimal":
-                //            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetDecimal(dtReader.GetOrdinal(\"{row.Nombre}\"));");
-                //            break;
+                        case "decimal":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? 0 : dtReader.GetDecimal(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
 
-                //        case "bool":
-                //            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = !dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) && dtReader.GetBoolean(dtReader.GetOrdinal(\"{row.Nombre}\"));");
-                //            break;
+                        case "bool":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = !dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) && dtReader.GetBoolean(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
 
-                //        case "DateTime":
-                //            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? new DateTime(1900, 01, 01) : dtReader.GetDateTime(dtReader.GetOrdinal(\"{row.Nombre}\"));");
-                //            break;
+                        case "DateTime":
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? new DateTime(1900, 01, 01) : dtReader.GetDateTime(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
 
-                //        default:
-                //            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? string.Empty : dtReader.GetString(dtReader.GetOrdinal(\"{row.Nombre}\"));");
-                //            break;
-                //    }
-                //}
+                        default:
+                            stringBuilder.AppendLine($"            {Cadena.PriMin(tabla)}.{row.Nombre} = dtReader.IsDBNull(dtReader.GetOrdinal(\"{row.Nombre}\")) ? string.Empty : dtReader.GetString(dtReader.GetOrdinal(\"{row.Nombre}\"));");
+                            break;
+                    }
+                }
 
-                //stringBuilder.AppendLine($"            return {Cadena.PriMin(tabla)};");
-                //stringBuilder.AppendLine($"        }}");
+                stringBuilder.AppendLine($"            return {Cadena.PriMin(tabla)};");
+                stringBuilder.AppendLine($"        }}");
 
-                //stringBuilder.AppendLine("        #endregion");
+                stringBuilder.AppendLine("        #endregion");
 
                 #endregion
 
