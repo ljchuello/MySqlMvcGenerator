@@ -87,6 +87,11 @@
                                 <label for="<%=txtBaseDatos.ClientID%>">Base de datos</label>
                             </div>
 
+                            <div class="input-field col s12">
+                                <asp:TextBox ID="txtPuerto" runat="server"></asp:TextBox>
+                                <label for="<%=txtPuerto.ClientID%>">Puerto</label>
+                            </div>
+
                             <div class="col s12">
                                 <button id="btnConectar" runat="server" class="btn blue col s12" onserverclick="btnConectar_OnServerClick">
                                     Conectar

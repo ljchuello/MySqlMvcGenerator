@@ -21,6 +21,7 @@ namespace MySqlMvcGenerator
                 txtUsuario.Text = _mariaDb.Usuario;
                 txtContrasenia.Text = _mariaDb.Contrasenia;
                 txtBaseDatos.Text = _mariaDb.BaseDatos;
+                txtPuerto.Text = _mariaDb.Port;
 
                 // Evitamos el doble clic
                 UControl.EvitarDobleEnvioButton(this, btnConectar);
@@ -58,6 +59,7 @@ namespace MySqlMvcGenerator
                 _mariaDb.Usuario = txtUsuario.Text;
                 _mariaDb.Contrasenia = txtContrasenia.Text;
                 _mariaDb.BaseDatos = txtBaseDatos.Text;
+                _mariaDb.Port = txtPuerto.Text;
 
                 // Validamos
                 if (!_mariaDb.Validar(this, _mariaDb))
@@ -91,6 +93,7 @@ namespace MySqlMvcGenerator
                 _mariaDb.Usuario = txtUsuario.Text;
                 _mariaDb.Contrasenia = txtContrasenia.Text;
                 _mariaDb.BaseDatos = txtBaseDatos.Text;
+                _mariaDb.Port = txtPuerto.Text;
 
                 // Validamos la conexion
                 if (!_mariaDb.Validar(this, _mariaDb))

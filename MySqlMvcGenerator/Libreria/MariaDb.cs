@@ -14,6 +14,7 @@ namespace MySqlMvcGenerator.Libreria
         public string Usuario { set; get; } = string.Empty;
         public string Contrasenia { set; get; } = string.Empty;
         public string BaseDatos { set; get; } = string.Empty;
+        public string Port { set; get; } = string.Empty;
 
         public void Guardar(MariaDb mariaDb)
         {
@@ -50,7 +51,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource ={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
@@ -79,7 +80,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
@@ -111,7 +112,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
