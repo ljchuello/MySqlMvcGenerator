@@ -111,7 +111,7 @@ namespace MySqlMvcGenerator.Libreria
                     stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
                     stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
                     stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Insert {tabla}\");");
-                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"INSERT INTO `{tabla}` (\");");
+                    stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"INSERT INTO {tabla} (\");");
 
                     // Cabecera
                     iteracion = 0;
@@ -119,8 +119,8 @@ namespace MySqlMvcGenerator.Libreria
                     {
                         ++iteracion;
                         stringBuilder.AppendLine(iteracion != campos.Count
-                            ? $"            stringBuilder.AppendLine(\"`{row.Nombre}`, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
-                            : $"            stringBuilder.AppendLine(\"`{row.Nombre}` -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                            ? $"            stringBuilder.AppendLine(\"{row.Nombre}, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                            : $"            stringBuilder.AppendLine(\"{row.Nombre} -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
                     }
 
                     // Values
@@ -170,7 +170,7 @@ namespace MySqlMvcGenerator.Libreria
                         stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
                         stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
                         stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Update {tabla}\");");
-                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"UPDATE `{tabla}` SET\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"UPDATE {tabla} SET\");");
 
                         // Cabecera
                         iteracion = 0;
@@ -182,22 +182,22 @@ namespace MySqlMvcGenerator.Libreria
                             if (!row.Nulo)
                             {
                                 stringBuilder.AppendLine(iteracion != listUpdate01.Count
-                                    ? $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
-                                    : $"            stringBuilder.AppendLine($\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                                    ? $"            stringBuilder.AppendLine($\"{row.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");"
+                                    : $"            stringBuilder.AppendLine($\"{row.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
                             }
                             else
                             {
                                 if (iteracion != listUpdate01.Count)
                                 {
                                     stringBuilder.AppendLine($"            stringBuilder.AppendLine(!_poolConexion.Vacia({Cadena.PriMin(tabla)}.{row.Nombre})");
-                                    stringBuilder.AppendLine($"                ? $\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
-                                    stringBuilder.AppendLine($"                : \"`{row.Nombre}` = NULL, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                                    stringBuilder.AppendLine($"                ? $\"{row.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}', -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
+                                    stringBuilder.AppendLine($"                : \"{row.Nombre} = NULL, -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
                                 }
                                 else
                                 {
                                     stringBuilder.AppendLine($"            stringBuilder.AppendLine(!_poolConexion.Vacia({Cadena.PriMin(tabla)}.{row.Nombre})");
-                                    stringBuilder.AppendLine($"                ? $\"`{row.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
-                                    stringBuilder.AppendLine($"                : \"`{row.Nombre}` = NULL -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
+                                    stringBuilder.AppendLine($"                ? $\"{row.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{row.Nombre})}}' -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\"");
+                                    stringBuilder.AppendLine($"                : \"{row.Nombre} = NULL -- {row.Nombre} | {row.TipoMariaDb} | {row.TipoDotNet}\");");
                                 }
                             }
                         }
@@ -205,7 +205,7 @@ namespace MySqlMvcGenerator.Libreria
                         // Where
                         stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"WHERE\");");
                         var rowUpdate = campos.FirstOrDefault(x => x.Nombre.ToLower() == "id") ?? new Estructura();
-                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"`{rowUpdate.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowUpdate.Nombre})}}'; -- {rowUpdate.Nombre} | {rowUpdate.TipoMariaDb} | {rowUpdate.TipoDotNet}\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"{rowUpdate.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowUpdate.Nombre})}}'; -- {rowUpdate.Nombre} | {rowUpdate.TipoMariaDb} | {rowUpdate.TipoDotNet}\");");
                         stringBuilder.AppendLine($"        return stringBuilder.ToString();");
                         stringBuilder.AppendLine($"        }}");
                     }
@@ -222,9 +222,9 @@ namespace MySqlMvcGenerator.Libreria
                         stringBuilder.AppendLine($"            StringBuilder stringBuilder = new StringBuilder();");
                         stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"\");");
                         stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"--  Delete {tabla}\");");
-                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"DELETE FROM `{tabla}` WHERE\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine(\"DELETE FROM {tabla} WHERE\");");
                         var rowDelete = campos.FirstOrDefault(x => x.Nombre.ToLower() == "id") ?? new Estructura();
-                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"`{rowDelete.Nombre}` = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowDelete.Nombre})}}'; -- {rowDelete.Nombre} | {rowDelete.TipoMariaDb} | {rowDelete.TipoDotNet}\");");
+                        stringBuilder.AppendLine($"            stringBuilder.AppendLine($\"{rowDelete.Nombre} = '{{_poolConexion.Remplazar({Cadena.PriMin(tabla)}.{rowDelete.Nombre})}}'; -- {rowDelete.Nombre} | {rowDelete.TipoMariaDb} | {rowDelete.TipoDotNet}\");");
                         stringBuilder.AppendLine($"        return stringBuilder.ToString();");
                         stringBuilder.AppendLine($"        }}");
                     }

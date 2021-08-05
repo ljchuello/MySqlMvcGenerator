@@ -58,7 +58,7 @@
                 <ul class="tabs">
                     <li class="tab"><a class="active" href="#test1">Principal</a></li>
                     <li class="tab"><a href="#test2">File.cs</a></li>
-                    <li class="tab"><a href="/Default.aspx">Reset</a></li>
+                    <li class="tab"><a href="#test3">Response</a></li>
                 </ul>
             </div>
 
@@ -126,6 +126,19 @@
                         <div class="input-field col s12">
                             <textarea id="txtModelo" runat="server" class="materialize-textarea"></textarea>
                             <label for="<%=txtModelo.ClientID%>">Modelo</label>
+                        </div>
+
+                    </ContentTemplate>
+                </asp:UpdatePanel>
+            </div>
+
+            <div id="test3" class="col s12">
+                <asp:UpdatePanel runat="server">
+                    <ContentTemplate>
+
+                        <div class="input-field col s12">
+                            <textarea id="txtResponse" runat="server" class="materialize-textarea"></textarea>
+                            <label for="<%=txtResponse.ClientID%>">Response</label>
                         </div>
 
                     </ContentTemplate>

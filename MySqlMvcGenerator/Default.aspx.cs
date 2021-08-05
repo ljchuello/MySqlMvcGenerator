@@ -110,6 +110,11 @@ namespace MySqlMvcGenerator
                 txtModelo.InnerText = modeloV2.Generar(this, ddlTabla.SelectedValue, lista);
                 Javascript.ResizeTxt(this, txtModelo.ClientID);
 
+                // Response
+                Response response = new Response();
+                txtResponse.InnerText = response.Generar(this, ddlTabla.SelectedValue, lista);
+                Javascript.ResizeTxt(this, txtResponse.ClientID);
+
                 // Libre de pecados
                 Notificacion.Toas(this, $"Se ha generado la clase de {ddlTabla.SelectedValue}");
             }
