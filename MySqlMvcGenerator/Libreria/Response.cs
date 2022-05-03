@@ -16,8 +16,10 @@ namespace MySqlMvcGenerator.Libreria
                 StringBuilder stringBuilder = new StringBuilder();
 
                 #region Campos
+
                 foreach (var row in campos)
                 {
+                    stringBuilder.AppendLine($"[JsonProperty(\"{Cadena.PriMin(row.Nombre)}\")]");
                     switch (row.TipoDotNet)
                     {
                         case "int":

@@ -51,7 +51,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port}; charset=utf8mb4;";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
@@ -80,7 +80,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port}; charset=utf8mb4;";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
@@ -112,7 +112,7 @@ namespace MySqlMvcGenerator.Libreria
             {
                 using (MySqlConnection mySqlConnection = new MySqlConnection())
                 {
-                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port};";
+                    mySqlConnection.ConnectionString = $"datasource={mariaDb.Servidor}; username={mariaDb.Usuario}; password={mariaDb.Contrasenia}; database={mariaDb.BaseDatos}; Port={mariaDb.Port}; charset=utf8mb4;";
                     mySqlConnection.Open();
                     MySqlCommand mySqlCommand = new MySqlCommand();
                     mySqlCommand.Connection = mySqlConnection;
